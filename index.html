@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barely Comics</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #141e2e;
+      --card-hover: #1a2639;
+      --border: #1e2d45;
+      --text: #f0f4f8;
+      --text-muted: #8b9bb4;
+      --accent: #00d4ff;
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(0,0,0,0.18) 8px, rgba(0,0,0,0.18) 16px);
+    }
+    .site-header {
+      background: #050a12;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 0.4rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+    .nav-links a.active {
+      color: #000;
+      background: var(--accent);
+    }
+    main {
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.2rem 1.5rem 3rem;
+      width: 100%;
+    }
+    .hero { margin-bottom: 2.8rem; }
+    .hero-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+    }
+    .featured-comic {
+      display: block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      max-width: 820px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .featured-comic:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+    .featured-comic img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: #0a101a;
+    }
+    .featured-body { padding: 1.15rem 1.3rem 1.35rem; }
+    .featured-body .caption { font-weight: 700; font-size: 1.15rem; margin-bottom: 0.25rem; }
+    .featured-body .date { color: var(--text-muted); font-size: 0.85rem; }
+    .section { margin-bottom: 2.8rem; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.3rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .section-header h2 { font-size: 1.35rem; font-weight: 800; }
+    .section-header a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .section-header a:hover { text-decoration: underline; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.35rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      background: var(--card-hover);
+    }
+    .card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      background: #0a101a;
+    }
+    .card-body {
+      padding: 0.95rem 1.05rem 1.15rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem; }
+    .card-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: auto; }
+    .site-footer {
+      text-align: center;
+      padding: 1.8rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      border-top: 1px solid var(--border);
+      background: #050a12;
+    }
+    .site-footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    @media (max-width: 640px) {
+      .nav-inner { flex-direction: column; gap: 0.75rem; }
+      .nav-links { flex-wrap: wrap; justify-content: center; }
+      .hero h1 { font-size: 1.4rem; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Barely <span>Comics</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="comics.html">Comics</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-label">Latest</div>
+      <h1>Latest Comic</h1>
+      <a href="comics.html" class="featured-comic">
+        <img src="latest-comic.png" alt="Latest comic">
+        <div class="featured-body">
+          <div class="caption">An Apple A Day</div>
+          <div class="date">August 11, 2026</div>
+        </div>
+      </a>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Recent Comics</h2>
+        <a href="comics.html">View all →</a>
+      </div>
+      <div class="grid">
+        <a href="comics.html" class="card">
+          <img src="https://placehold.co/400x300/1a2639/00d4ff?text=Comic+1" alt="Comic 1">
+          <div class="card-body">
+            <div class="card-title">First Strip</div>
+            <div class="card-meta">Aug 2026</div>
+          </div>
+        </a>
+        <a href="comics.html" class="card">
+          <img src="https://placehold.co/400x300/1a2639/8b9bb4?text=Comic+2" alt="Comic 2">
+          <div class="card-body">
+            <div class="card-title">Second Strip</div>
+            <div class="card-meta">Aug 2026</div>
+          </div>
+        </a>
+        <a href="comics.html" class="card">
+          <img src="https://placehold.co/400x300/1a2639/00d4ff?text=Comic+3" alt="Comic 3">
+          <div class="card-body">
+            <div class="card-title">Third Strip</div>
+            <div class="card-meta">Jul 2026</div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Barely Comics · <a href="https://x.com/nowayitshim_" target="_blank" rel="noopener">@nowayitshim_</a></p>
+  </footer>
+</body>
+</html>
