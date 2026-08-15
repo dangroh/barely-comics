@@ -105,6 +105,7 @@
       color: inherit;
       max-width: 820px;
       transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
     }
     .featured-comic:hover {
       transform: translateY(-3px);
@@ -153,6 +154,7 @@
       display: flex;
       flex-direction: column;
       transition: transform 0.2s, border-color 0.2s, background 0.2s;
+      cursor: pointer;
     }
     .card:hover {
       transform: translateY(-4px);
@@ -183,11 +185,68 @@
       background: #050a12;
     }
     .site-footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox-content {
+      position: relative;
+      max-width: 95vw;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: default;
+    }
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      background: #0a101a;
+    }
+    .lightbox-caption {
+      margin-top: 1rem;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 2.2rem;
+      font-weight: 300;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+      user-select: none;
+    }
+    .lightbox-close:hover {
+      color: var(--accent);
+    }
+
     @media (max-width: 640px) {
       .nav-inner { flex-direction: column; gap: 0.75rem; }
       .nav-links { flex-wrap: wrap; justify-content: center; }
       .hero h1 { font-size: 1.4rem; }
       .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+      .lightbox-close { top: -36px; font-size: 2rem; }
     }
   </style>
 </head>
@@ -210,7 +269,7 @@
     <section class="hero">
       <div class="hero-label">Latest</div>
       <h1>Latest Comic</h1>
-      <a href="comics.html" class="featured-comic">
+      <a href="#" class="featured-comic" data-full="ice-breakers.png" data-title="Ice Breakers">
         <img src="ice-breakers.png" alt="Ice Breakers">
         <div class="featured-body">
           <div class="caption">Ice Breakers</div>
@@ -225,21 +284,21 @@
         <a href="comics.html">View all →</a>
       </div>
       <div class="grid">
-        <a href="comics.html" class="card">
+        <a href="#" class="card" data-full="latest-comic.png" data-title="An Apple A Day Keeps the Doctor Away">
           <img src="latest-comic.png" alt="An Apple A Day Keeps the Doctor Away">
           <div class="card-body">
             <div class="card-title">An Apple A Day Keeps the Doctor Away</div>
             <div class="card-meta">August 11, 2026</div>
           </div>
         </a>
-        <a href="comics.html" class="card">
+        <a href="#" class="card">
           <img src="https://placehold.co/400x300/1a2639/8b9bb4?text=Comic+2" alt="Comic 2">
           <div class="card-body">
             <div class="card-title">Second Strip</div>
             <div class="card-meta">Aug 2026</div>
           </div>
         </a>
-        <a href="comics.html" class="card">
+        <a href="#" class="card">
           <img src="https://placehold.co/400x300/1a2639/00d4ff?text=Comic+3" alt="Comic 3">
           <div class="card-body">
             <div class="card-title">Third Strip</div>
@@ -253,5 +312,48 @@
   <footer class="site-footer">
     <p>© 2026 Barely Comics · <a href="https://x.com/nowayitshim_" target="_blank" rel="noopener">@nowayitshim_</a></p>
   </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <span class="lightbox-close" id="lightbox-close">&times;</span>
+      <img id="lightbox-img" src="" alt="">
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const closeBtn = document.getElementById('lightbox-close');
+
+    // Open lightbox when clicking any comic that has data-full
+    document.querySelectorAll('[data-full]').forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const src = this.getAttribute('data-full');
+        const title = this.getAttribute('data-title') || '';
+        lightboxImg.src = src;
+        lightboxCaption.textContent = title;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // Close functions
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
 </body>
 </html>
