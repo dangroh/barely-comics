@@ -269,11 +269,11 @@
     <section class="hero">
       <div class="hero-label">Latest</div>
       <h1>Latest Comic</h1>
-      <a href="#" class="featured-comic" data-full="ice-breakers.png" data-title="Ice Breakers">
-        <img src="ice-breakers.png" alt="Ice Breakers">
+      <a href="#" class="featured-comic" data-full="move_gun_button.png" data-title="Move Gun Button">
+        <img src="move_gun_button.png" alt="Move Gun Button">
         <div class="featured-body">
-          <div class="caption">Ice Breakers</div>
-          <div class="date">August 15, 2026</div>
+          <div class="caption">Move Gun Button</div>
+          <div class="date">August 16, 2026</div>
         </div>
       </a>
     </section>
@@ -284,18 +284,18 @@
         <a href="comics.html">View all →</a>
       </div>
       <div class="grid">
+        <a href="#" class="card" data-full="ice-breakers.png" data-title="Ice Breakers">
+          <img src="ice-breakers.png" alt="Ice Breakers">
+          <div class="card-body">
+            <div class="card-title">Ice Breakers</div>
+            <div class="card-meta">August 15, 2026</div>
+          </div>
+        </a>
         <a href="#" class="card" data-full="latest-comic.png" data-title="An Apple A Day Keeps the Doctor Away">
           <img src="latest-comic.png" alt="An Apple A Day Keeps the Doctor Away">
           <div class="card-body">
             <div class="card-title">An Apple A Day Keeps the Doctor Away</div>
             <div class="card-meta">August 11, 2026</div>
-          </div>
-        </a>
-        <a href="#" class="card">
-          <img src="https://placehold.co/400x300/1a2639/8b9bb4?text=Comic+2" alt="Comic 2">
-          <div class="card-body">
-            <div class="card-title">Second Strip</div>
-            <div class="card-meta">Aug 2026</div>
           </div>
         </a>
         <a href="#" class="card">
@@ -328,7 +328,6 @@
     const lightboxCaption = document.getElementById('lightbox-caption');
     const closeBtn = document.getElementById('lightbox-close');
 
-    // Open lightbox when clicking any comic that has data-full
     document.querySelectorAll('[data-full]').forEach(el => {
       el.addEventListener('click', function(e) {
         e.preventDefault();
@@ -341,7 +340,6 @@
       });
     });
 
-    // Close functions
     function closeLightbox() {
       lightbox.classList.remove('active');
       document.body.style.overflow = '';
